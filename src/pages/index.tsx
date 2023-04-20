@@ -6,8 +6,6 @@ import { Title } from '@mantine/core'
 
 const inter = Inter({ subsets: ['latin'] })
 
-const H = 6;
-const W = 7;
 export default function Home() {
   return (
     <>
