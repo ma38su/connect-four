@@ -1,11 +1,11 @@
 import React from "react";
 import { ActionIcon, Button, Stack } from "@mantine/core";
-import { ConnectFourState } from "../../libs/connect-four/ConnectFourState";
-import { WinningStatus } from "../../libs/connect-four/State.ts";
+import { ConnectFourState } from "./ConnectFourState.js";
+import { WinningStatus } from "./State.js";
 import { IconArrowBadgeDownFilled, IconCircleFilled } from "@tabler/icons-react";
-import { mctsAction, mctsScores } from "../../libs/connect-four/MCTS";
-import { TimeKeeper } from "../../libs/connect-four/TimeKeeper";
-import { RandomXorshift } from "../../libs/connect-four/RandomXorshift.ts";
+import { mctsAction, mctsScores } from "./MCTS.js";
+import { TimeKeeper } from "./TimeKeeper.js";
+import { RandomXorshift } from "./RandomXorshift.js";
 
 const H = 6;
 const W = 7;
@@ -99,7 +99,7 @@ function ConnectFourBoard() {
         setGameState(build(state));
       }, 500);
     }
-  }, [gameState, player1, player2]);
+  }, [gameState, player, player1, player2]);
 
   const legalActions = state.legalActions();
 
