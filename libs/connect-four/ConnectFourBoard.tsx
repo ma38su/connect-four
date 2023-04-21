@@ -19,7 +19,7 @@ type GameState = {
   scores: number[],
 }
 
-function build(state: ConnectFourState): GameState {
+function toGameState(state: ConnectFourState): GameState {
   const table: number[][] = [];
   for (let y = H - 1; y >= 0; --y) {
     const array: number[] = [];
@@ -70,17 +70,17 @@ function ConnectFourBoard() {
 
   const [player1, setPlayer1] = React.useState(0);
   const [player2, setPlayer2] = React.useState(10);
-  const [gameState, setGameState] = React.useState(build(state));
+  const [gameState, setGameState] = React.useState(toGameState(state));
   const [scoreVisible, setScoreVisible] = React.useState(true);
 
   const handleAction = (action: number) => {
     state.advance(action);
-    setGameState(build(state));
+    setGameState(toGameState(state));
   }
 
   function restartGame() {
     state.reset();
-    setGameState(build(state));
+    setGameState(toGameState(state));
   }
   
   const { table, status, player, scores } = gameState;
@@ -97,7 +97,7 @@ function ConnectFourBoard() {
       const action = mctsAction(state, rgen, new TimeKeeper(player > 0 ? player1 : player2));
       state.advance(action);
       setTimeout(() => {
-        setGameState(build(state));
+        setGameState(toGameState(state));
       }, 100);
     }
   }, [gameState, player, player1, player2]);
