@@ -10,7 +10,7 @@ import { RandomXorshift } from "../utils/RandomXorshift.ts";
 
 const H = 6;
 const W = 7;
-const CELL_SIZE = 40;
+const CELL_SIZE = 50;
 
 type GameState = {
   player: number,
