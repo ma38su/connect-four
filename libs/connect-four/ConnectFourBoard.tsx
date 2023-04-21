@@ -46,9 +46,9 @@ function build(state: ConnectFourState): GameState {
 
 function toImage(value: number) {
   if (value > 0) {
-    return <IconCircleFilled style={{color: 'blue'}} />
+    return <IconCircleFilled style={{color: 'blue'}} size={20} />
   } else if (value < 0) {
-    return <IconCircleFilled style={{color: 'red'}} />
+    return <IconCircleFilled style={{color: 'red'}} size={20} />
   } else {
     return '';
   }
@@ -56,9 +56,9 @@ function toImage(value: number) {
 
 function toActionIcon(value: number) {
   if (value > 0) {
-    return <IconArrowBadgeDownFilled style={{color: 'blue'}} size={`${30}px`} />
+    return <IconArrowBadgeDownFilled style={{color: 'blue'}} size={30} />
   } else if (value < 0) {
-    return <IconArrowBadgeDownFilled style={{color: 'red'}} size={`${30}px`} />
+    return <IconArrowBadgeDownFilled style={{color: 'red'}} size={30} />
   } else {
     return '';
   }
@@ -111,7 +111,16 @@ function ConnectFourBoard() {
       buttons.push(null);
       continue;
     }
-    const button = <ActionIcon key={`button${i}`} color='gray' onClick={e => handleAction(i)} style={{width: CELL_SIZE}}>{toActionIcon(player)}</ActionIcon>;
+    const button = (
+      <ActionIcon key={`button${i}`}
+        color='gray'
+        variant="subtle"
+        style={{display: 'inline'}}
+        onClick={() => handleAction(i)}
+      >
+        {toActionIcon(player)}
+      </ActionIcon>
+    );
     buttons.push(button);
   }
 
@@ -158,7 +167,7 @@ function ConnectFourBoard() {
                 return <td key={i} style={{width: CELL_SIZE, height: CELL_SIZE}}></td>
               }
               return (
-                <td key={i} style={{width: CELL_SIZE, height: CELL_SIZE, textAlign: 'center', paddingBottom: 10}}>
+                <td key={i} style={{width: CELL_SIZE, height: CELL_SIZE, textAlign: 'center'}}>
                   {button}
                 </td>
               )
@@ -174,8 +183,7 @@ function ConnectFourBoard() {
                 <td key={j} style={{
                   width: CELL_SIZE,
                   height: CELL_SIZE,
-                  border: 'solid',
-                  fontSize: 50,
+                  border: '1px solid #222',
                   padding: 0,
                   margin: 0,
                   lineHeight: 0,
