@@ -142,7 +142,7 @@ function ConnectFourBoard() {
                 <td key={i}
                   style={{
                     width: CELL_SIZE, height: CELL_SIZE, textAlign: 'center', color: player > 0 ? 'blue' : 'red',
-                    fontSize: '10pt'
+                    fontSize: '12pt'
                   }}
                 >
                 {(scoreVisible && !Number.isNaN(score)) ? `${(score*100).toFixed(0)}%` : '-'}
@@ -194,12 +194,19 @@ function ConnectFourBoard() {
 
       <Group>
         <Button
+          style={{fontSize: '12pt'}}
           color={scoreVisible ? 'green' : 'gray'}
           onClick={(_) => setScoreVisible(!scoreVisible)}
         >
         Score
         </Button>
-        <Button color='grape' onClick={e => restartGame()}>Restart</Button>
+        <Button
+          style={{fontSize: '12pt'}}
+          color='grape'
+          onClick={e => restartGame()}
+        >
+        Restart
+        </Button>
       </Group>
       <Button.Group>
         {
@@ -207,7 +214,7 @@ function ConnectFourBoard() {
             <Button key={i}
               color={player1 === val ? 'blue' : 'gray'}
               onClick={e => setPlayer1(val)}
-              style={{fontSize: '10pt'}}
+              style={{fontSize: '12pt'}}
             >
             {val === 0 ? 'Player 1' : `AI Lv.${i}`}
             </Button>
@@ -219,7 +226,7 @@ function ConnectFourBoard() {
           [0, 5, 10, 100].map((val, i) => (
             <Button key={i}
               color={player2 === val ? 'red' : 'gray'}
-              style={{fontSize: '10pt'}}
+              style={{fontSize: '12pt'}}
               onClick={e => setPlayer2(val)}
             >
             {val === 0 ? 'Player 2' : `AI Lv.${i}`}
