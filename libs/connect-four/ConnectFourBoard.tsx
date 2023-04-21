@@ -1,11 +1,12 @@
 import React from "react";
 import { ActionIcon, Button, Stack } from "@mantine/core";
-import { ConnectFourState } from "./ConnectFourState.js";
-import { WinningStatus } from "./State.js";
 import { IconArrowBadgeDownFilled, IconCircleFilled } from "@tabler/icons-react";
-import { mctsAction, mctsScores } from "./MCTS.js";
-import { TimeKeeper } from "./TimeKeeper.js";
-import { RandomXorshift } from "./RandomXorshift.js";
+
+import { ConnectFourState } from "./ConnectFourState.ts";
+import { WinningStatus } from "./State.ts";
+import { mctsAction, mctsScores } from "./MCTS.ts";
+import { TimeKeeper } from "../utils/TimeKeeper.ts";
+import { RandomXorshift } from "../utils/RandomXorshift.ts";
 
 const H = 6;
 const W = 7;

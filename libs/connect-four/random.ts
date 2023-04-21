@@ -1,4 +1,4 @@
-import { RandomXorshift } from "./RandomXorshift.ts";
+import { RandomXorshift } from "../utils/RandomXorshift.ts";
 import { Action, State } from "./State.ts";
 
 function randomAction(state: State, rgen: RandomXorshift): Action {

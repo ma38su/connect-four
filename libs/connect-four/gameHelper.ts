@@ -1,4 +1,4 @@
-import { RandomXorshift } from "./RandomXorshift.ts";
+import { RandomXorshift } from "../utils/RandomXorshift.ts";
 import { State, WinningStatus } from "./State.ts";
 import { randomAction } from "./random.ts";
 

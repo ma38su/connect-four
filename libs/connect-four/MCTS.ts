@@ -1,6 +1,6 @@
-import { RandomXorshift } from "./RandomXorshift.ts";
+import { RandomXorshift } from "../utils/RandomXorshift.ts";
 import { State } from "./State.ts";
-import { TimeKeeper } from "./TimeKeeper.ts";
+import { TimeKeeper } from "../utils/TimeKeeper.ts";
 import { calculateWinRate, playout } from "./gameHelper.ts";
 
 /** for UCB */
