@@ -10,7 +10,7 @@ import { RandomXorshift } from "../utils/RandomXorshift.ts";
 
 const H = 6;
 const W = 7;
-const CELL_SIZE = 50;
+const CELL_SIZE = 40;
 
 type GameState = {
   player: number,
@@ -78,7 +78,7 @@ function ConnectFourBoard() {
     setGameState(build(state));
   }
 
-  function resetGame() {
+  function restartGame() {
     state.reset();
     setGameState(build(state));
   }
@@ -90,15 +90,15 @@ function ConnectFourBoard() {
       return;
     }
     if ((player1 > 0 && player > 0) || (player2 > 0 && player < 0)) {
-      setTimeout(() => {
-        if (state.isDone()) {
-          return;
-        }
+      if (state.isDone()) {
+        return;
+      }
 
-        const action = mctsAction(state, rgen, new TimeKeeper(player > 0 ? player1 : player2));
-        state.advance(action);
+      const action = mctsAction(state, rgen, new TimeKeeper(player > 0 ? player1 : player2));
+      state.advance(action);
+      setTimeout(() => {
         setGameState(build(state));
-      }, 500);
+      }, 100);
     }
   }, [gameState, player, player1, player2]);
 
@@ -118,25 +118,36 @@ function ConnectFourBoard() {
   function statusToLabel(status: WinningStatus, player: number) {
     switch (status) {
       case WinningStatus.WIN:
-        return <div style={{height: 40}}>WIN {toImage(player)}</div>
+        return <>{toImage(player)} wins!</>
       case WinningStatus.LOSE:
-        return <div style={{height: 40}}>WIN {toImage(-player)}</div>
+        return <>{toImage(-player)} wins!</>
       case WinningStatus.DRAW:
-        return <div style={{height: 40}}>DRAW</div>
+        return <>Draw</>
       default:
-        return <div style={{height: 40}}></div>
+        return <>In progress</>
     }
   }
 
   return (
     <Stack align='center'>
+      <div style={{height: 30, display: 'inline-flex', alignItems: 'center', verticalAlign: 'middle'}}>
       {statusToLabel(status, player)}
+      </div>
       <table style={{borderCollapse: 'collapse'}}>
         <thead>
           <tr key={`tr${0}`} style={{}}>
           {
             scores.map((score, i) => {
-              return <td key={i} style={{width: CELL_SIZE, height: CELL_SIZE, textAlign: 'center', color: player > 0 ? 'blue' : 'red'}}>{(scoreVisible && !Number.isNaN(score)) ? `${(score*100).toFixed(1)}%` : '-'}</td>
+              return (
+                <td key={i}
+                  style={{
+                    width: CELL_SIZE, height: CELL_SIZE, textAlign: 'center', color: player > 0 ? 'blue' : 'red',
+                    fontSize: '10pt'
+                  }}
+                >
+                {(scoreVisible && !Number.isNaN(score)) ? `${(score*100).toFixed(0)}%` : '-'}
+                </td>
+              )
             })
           }
           </tr>
@@ -188,7 +199,7 @@ function ConnectFourBoard() {
         >
         Score
         </Button>
-        <Button color='gray' onClick={e => resetGame()}>Reset</Button>
+        <Button color='grape' onClick={e => restartGame()}>Restart</Button>
       </Group>
       <Button.Group>
         {
@@ -196,8 +207,9 @@ function ConnectFourBoard() {
             <Button key={i}
               color={player1 === val ? 'blue' : 'gray'}
               onClick={e => setPlayer1(val)}
+              style={{fontSize: '10pt'}}
             >
-            {val === 0 ? 'Player' : `Lv.${i}`}
+            {val === 0 ? 'Player 1' : `AI Lv.${i}`}
             </Button>
           ))
         }
@@ -207,9 +219,10 @@ function ConnectFourBoard() {
           [0, 5, 10, 100].map((val, i) => (
             <Button key={i}
               color={player2 === val ? 'red' : 'gray'}
+              style={{fontSize: '10pt'}}
               onClick={e => setPlayer2(val)}
             >
-            {val === 0 ? 'Player' : `Lv.${i}`}
+            {val === 0 ? 'Player 2' : `AI Lv.${i}`}
             </Button>)
           )
         }

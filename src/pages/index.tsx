@@ -1,6 +1,6 @@
 import Head from 'next/head'
 // import styles from '@/styles/Home.module.css'
-import { Title } from '@mantine/core'
+import { Divider, Title } from '@mantine/core'
 import { ConnectFourBoard } from '../../libs/connect-four/ConnectFourBoard'
 
 export default function Home() {
@@ -14,6 +14,7 @@ export default function Home() {
       </Head>
       <main>
         <Title style={{textAlign: 'center', marginTop: 50}}>Connect Four</Title>
+        <Divider my="sm" />
         <ConnectFourBoard />
       </main>
     </>
