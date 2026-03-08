@@ -1,7 +1,7 @@
-import { RandomXorshift } from "../utils/RandomXorshift.ts";
-import { State } from "./State.ts";
-import { TimeKeeper } from "../utils/TimeKeeper.ts";
-import { calculateWinRate, playout } from "./gameHelper.ts";
+import { RandomXorshift } from "../utils/RandomXorshift";
+import { State } from "./State";
+import { TimeKeeper } from "../utils/TimeKeeper";
+import { calculateWinRate, playout } from "./gameHelper";
 
 /** for UCB */
 const C = 1;
@@ -67,14 +67,14 @@ class Node {
     let bestValue = Number.NEGATIVE_INFINITY;
     let bestActionIndex = -1;
     for (let i = 0; i < this.childNodes.length; ++i) {
-      const childNode = this.childNodes[i];
+      const childNode = this.childNodes[i]!;
       const ucb1Value = 1 - childNode.w / childNode.n + C * Math.sqrt(2 * Math.log(t) / childNode.n);
       if (ucb1Value > bestValue) {
         bestActionIndex = i;
         bestValue = ucb1Value;
       }
     }
-    return this.childNodes[bestActionIndex];
+    return this.childNodes[bestActionIndex]!;
   }
 }
 
@@ -95,13 +95,13 @@ function mctsAction(state: State, rgen: RandomXorshift, timeKeeper?: TimeKeeper)
     throw new Error();
   }
   for (let i = 0; i < legalActions.length; ++i) {
-    const { n } = rootNode.childNodes[i];
+    const { n } = rootNode.childNodes[i]!;
     if (n > bestActionSearchedNumber) {
       bestActionIndex = i;
       bestActionSearchedNumber = n;
     }
   }
-  return legalActions[bestActionIndex];
+  return legalActions[bestActionIndex]!;
 }
 
 function mctsScores(state: State, rgen: RandomXorshift, timeKeeper?: TimeKeeper): number[] {
@@ -126,7 +126,7 @@ function mctsScores(state: State, rgen: RandomXorshift, timeKeeper?: TimeKeeper)
       scores.push(Number.NaN);
       continue;
     }
-    const { n, w } = rootNode.childNodes[i];
+    const { n, w } = rootNode.childNodes[i]!;
     const rate = (1 - w / n);
     scores.push(rate);
   }

@@ -1,4 +1,4 @@
-import { State, WinningStatus } from "./State.ts";
+import { State, WinningStatus } from "./State";
 
 const H = 6;
 const W = 7;
@@ -10,8 +10,8 @@ const dyLeftUp = [-1, 1];
 function evaluateGame(state: ConnectFourState, coordinate: [number, number]): boolean {
   const changeList: ((y: number, action: number) => number)[] = [
     (y, _action) => y,
-    (y, action) => y + dyRightUp[action],
-    (y, action) => y + dyLeftUp[action],
+    (y, action) => y + dyRightUp[action]!,
+    (y, action) => y + dyLeftUp[action]!,
   ]
 
   for (const func of changeList) {
@@ -35,18 +35,18 @@ function evaluateGame(state: ConnectFourState, coordinate: [number, number]): bo
         return true;
       }
       const [tmpCodY, tmpCodX] = tmpCod;
-      check[tmpCodY][tmpCodX] = true;
+      check[tmpCodY]![tmpCodX] = true;
 
       for (let action = 0; action < 2; ++action) {
         const ty = func(tmpCodY, action);
-        const tx = tmpCodX + dx[action];
+        const tx = tmpCodX + dx[action]!;
         if (ty < 0 || ty >= H || tx < 0 || tx >= W) {
           continue;
         }
-        if (!state.myBoard[ty][tx]) {
+        if (!state.myBoard[ty]![tx]) {
           continue;
         }
-        if (check[ty][tx]) {
+        if (check[ty]![tx]) {
           continue;
         }
         que.push([ty, tx]);
@@ -57,7 +57,7 @@ function evaluateGame(state: ConnectFourState, coordinate: [number, number]): bo
   let [ty, tx] = coordinate;
   let isWin = true;
   for (let i = 0; i < 4; ++i) {
-    const isMine = (ty >= 0 && ty < H && tx >= 0 && tx < W && state.myBoard[ty][tx]);
+    const isMine = (ty >= 0 && ty < H && tx >= 0 && tx < W && state.myBoard[ty]![tx]);
     if (!isMine) {
       isWin = false;
       break;
@@ -100,8 +100,8 @@ class ConnectFourState implements State {
 
     for (let y = 0; y < H; ++y) {
       for (let x = 0; x < W; ++x) {
-        this.myBoard[y][x] = false;
-        this.enermyBoard[y][x] = false;
+        this.myBoard[y]![x] = false;
+        this.enermyBoard[y]![x] = false;
       }
     }
   }
@@ -118,7 +118,7 @@ class ConnectFourState implements State {
     const actions: number[] = [];
     for (let x = 0; x < W; ++x) {
       for (let y = H - 1; y >= 0; --y) {
-        if (!this.myBoard[y][x] && !this.enermyBoard[y][x]) {
+        if (!this.myBoard[y]![x] && !this.enermyBoard[y]![x]) {
           actions.push(x);
           break;
         }
@@ -130,8 +130,8 @@ class ConnectFourState implements State {
   advance(action: number): void {
     let coordinate: [number, number] | null = null;
     for (let y = 0; y < H; ++y) {
-      if (!this.myBoard[y][action] && !this.enermyBoard[y][action]) {
-        this.myBoard[y][action] = true;
+      if (!this.myBoard[y]![action] && !this.enermyBoard[y]![action]) {
+        this.myBoard[y]![action] = true;
         coordinate = [y, action];
         break;
       }
@@ -191,9 +191,9 @@ class ConnectFourState implements State {
     }
     for (let y = H - 1; y >= 0; --y) {
       for (let x = 0; x < W; ++x) {
-        if (this.myBoard[y][x]) {
+        if (this.myBoard[y]![x]) {
           ss += this.isFirst ? 'x' : 'o';
-        } else if (this.enermyBoard[y][x]) {
+        } else if (this.enermyBoard[y]![x]) {
           ss += this.isFirst ? 'o' : 'x';
         } else {
           ss += '.';
